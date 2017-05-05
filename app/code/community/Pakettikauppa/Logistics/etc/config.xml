@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<config>
+ <modules>
+   <Pakettikauppa_Logistics>
+     <version>1.0</version>
+   </Pakettikauppa_Logistics>
+ </modules>
+ <global>
+   <models>
+     <pakettikauppa_methods>
+        <class>Pakettikauppa_Logistics_Model_Methods</class>
+     </pakettikauppa_methods>
+     <pakettikauppa_logistics>
+       <class>Pakettikauppa_Logistics_Model</class>
+       <resourceModel>logistics_resource</resourceModel>
+     </pakettikauppa_logistics>
+     <logistics_resource>
+       <class>Pakettikauppa_Logistics_Model_Resource</class>
+       <entities>
+         <pickuppoint>
+           <table>pakettikauppa_logistics</table>
+         </pickuppoint>
+       </entities>
+     </logistics_resource>
+   </models>
+   <resources>
+     <logistics_setup>
+       <setup>
+         <module>Pakettikauppa_Logistics</module>
+       </setup>
+     </logistics_setup>
+   </resources>
+   <helpers>
+     <pakettikauppa_logistics>
+       <class>Pakettikauppa_Logistics_Helper</class>
+     </pakettikauppa_logistics>
+   </helpers>
+ </global>
+ <default>
+   <carriers>
+     <pakettikauppa_homedelivery>
+       <active>1</active>
+       <sallowspecific>0</sallowspecific>
+       <model>pakettikauppa_methods/home</model>
+       <name>Pakettikauppa Home Delivery</name>
+       <price>10.00</price>
+       <title>Pakettikauppa Home Delivery</title>
+     </pakettikauppa_homedelivery>
+     <pakettikauppa_pickuppoint>
+       <active>1</active>
+       <sallowspecific>0</sallowspecific>
+       <model>pakettikauppa_methods/pickup</model>
+       <name>Pakettikauppa Pickup Point</name>
+       <price>20.00</price>
+       <title>Pakettikauppa Pickup Point</title>
+     </pakettikauppa_pickuppoint>
+   </carriers>
+ </default>
+ <frontend>
+   <routers>
+       <ultimateshipping>
+           <use>standard</use>
+           <args>
+               <module>Pakettikauppa_Logistics</module>
+               <frontName>pakettikauppalogistics</frontName>
+           </args>
+       </ultimateshipping>
+   </routers>
+   <layout>
+     <updates>
+         <pakettikauppa_logistics>
+             <file>pakettikauppa/logistics.xml</file>
+         </pakettikauppa_logistics>
+     </updates>
+   </layout>
+ </frontend>
+</config>

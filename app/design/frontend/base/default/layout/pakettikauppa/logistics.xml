@@ -1,0 +1,36 @@
+<layout>
+
+  <!-- STANDARD CHECKOUT OVERRIDE -->
+  <checkout_onepage_index>
+    <!-- IN CASE OF NEED TO OVERRIDE AVAILABLE.PHTML UNCOMMENT THESE LINES -->
+    <!-- <reference name='checkout.onepage.shipping_method.available'>
+      <action method='setTemplate'><template>pakettikauppa/logistics/checkout/onepage/shipping_method/available.phtml</template></action>
+    </reference> -->
+    <reference name="content">
+      <reference name="checkout.onepage">
+        <reference name="checkout.onepage.shipping_method">
+          <action method='setTemplate'><template>pakettikauppa/logistics/checkout/onepage/shipping_method.phtml</template></action>
+          <block type="core/template" template="pakettikauppa/logistics/checkout/onepage/search.phtml" name="shipping_search_box" />
+        </reference>
+      </reference>
+    </reference>
+  </checkout_onepage_index>
+  <checkout_onepage_shippingmethod>
+    <!-- IN CASE OF NEED TO OVERRIDE AVAILABLE.PHTML UNCOMMENT THESE LINES -->
+    <!-- <reference name='root'>
+      <action method='setTemplate'><template>pakettikauppa/logistics/checkout/onepage/shipping_method/available.phtml</template></action>
+    </reference> -->
+  </checkout_onepage_shippingmethod>
+  <!-- STANDARD CHECKOUT OVERRIDE ENDS HERE -->
+
+  <!-- ONESTEP CHECKOUT OVERRIDE -->
+  <onestepcheckout_index_index>
+    <reference name="onestepcheckout.checkout">
+      <action method="setTemplate">
+        <template>pakettikauppa/logistics/onestepcheckout/checkout.phtml</template>
+      </action>
+      <block type="core/template" template="pakettikauppa/logistics/onestepcheckout/search.phtml" name="shipping_search_box" />
+    </reference>
+  </onestepcheckout_index_index>
+  <!-- ONESTEP CHECKOUT OVERRIDE ENDS HERE -->
+</layout>

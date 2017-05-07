@@ -8,7 +8,7 @@
  <global>
    <models>
      <pakettikauppa_methods>
-        <class>Pakettikauppa_Logistics_Model_Methods</class>
+       <class>Pakettikauppa_Logistics_Model_Methods</class>
      </pakettikauppa_methods>
      <pakettikauppa_logistics>
        <class>Pakettikauppa_Logistics_Model</class>
@@ -58,19 +58,26 @@
  </default>
  <frontend>
    <routers>
+     <checkout>
+        <args>
+          <modules>
+            <pakettikauppa_logistics before="Mage_Checkout">Pakettikauppa_Logistics_Checkout</pakettikauppa_logistics>
+          </modules>
+        </args>
+      </checkout>
        <ultimateshipping>
-           <use>standard</use>
-           <args>
-               <module>Pakettikauppa_Logistics</module>
-               <frontName>pakettikauppalogistics</frontName>
-           </args>
+         <use>standard</use>
+         <args>
+           <module>Pakettikauppa_Logistics</module>
+           <frontName>pakettikauppalogistics</frontName>
+         </args>
        </ultimateshipping>
    </routers>
    <layout>
      <updates>
-         <pakettikauppa_logistics>
-             <file>pakettikauppa/logistics.xml</file>
-         </pakettikauppa_logistics>
+       <pakettikauppa_logistics>
+         <file>pakettikauppa/logistics.xml</file>
+       </pakettikauppa_logistics>
      </updates>
    </layout>
  </frontend>

@@ -55,13 +55,16 @@
                         <?php endif; ?>
 
                         <?php endif; ?>
-                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
-                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-                        <?php echo $_excl; ?>
-                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
-                        <?php endif; ?>
+                        <label for="s_method_<?php echo $_rate->getCode() ?>">
+                          <span class="method_title"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?></span>
+                          <span class="method_description"><?php echo $this->escapeHtml($_rate->getMethodDescription()) ?></span>
+                          <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                          <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                          <?php echo $_excl; ?>
+                          <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                              (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                          <?php endif; ?>
+
                         </label>
                    <?php endif ?>
                 </li>

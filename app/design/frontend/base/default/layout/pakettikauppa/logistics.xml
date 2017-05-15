@@ -3,9 +3,9 @@
   <!-- STANDARD CHECKOUT OVERRIDE -->
   <checkout_onepage_index>
     <!-- IN CASE OF NEED TO OVERRIDE AVAILABLE.PHTML UNCOMMENT THESE LINES -->
-    <!-- <reference name='checkout.onepage.shipping_method.available'>
+    <reference name='checkout.onepage.shipping_method.available'>
       <action method='setTemplate'><template>pakettikauppa/logistics/checkout/onepage/shipping_method/available.phtml</template></action>
-    </reference> -->
+    </reference>
     <reference name="content">
       <reference name="checkout.onepage">
         <reference name="checkout.onepage.shipping_method">
@@ -17,9 +17,9 @@
   </checkout_onepage_index>
   <checkout_onepage_shippingmethod>
     <!-- IN CASE OF NEED TO OVERRIDE AVAILABLE.PHTML UNCOMMENT THESE LINES -->
-    <!-- <reference name='root'>
+    <reference name='root'>
       <action method='setTemplate'><template>pakettikauppa/logistics/checkout/onepage/shipping_method/available.phtml</template></action>
-    </reference> -->
+    </reference>
   </checkout_onepage_shippingmethod>
   <!-- STANDARD CHECKOUT OVERRIDE ENDS HERE -->
 

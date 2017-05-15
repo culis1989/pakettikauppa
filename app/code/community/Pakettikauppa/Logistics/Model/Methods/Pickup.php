@@ -25,7 +25,9 @@ implements Mage_Shipping_Model_Carrier_Interface
         $client = new Pakettikauppa\Client(array('test_mode' => true));
         $methods = json_decode($client->searchPickupPoints($this->getZip()));
         foreach($methods as $method){
-          $result->append($this->_getCustomRate($method->name,$method->pickup_point_id, 999));
+          $description = $method->name.' | '.$method->street_address.', '.$method->city.', '.$method->postcode;
+          $name = $method->provider;
+          $result->append($this->_getCustomRate($name,$description,$method->pickup_point_id, 999));
         }
         return $result;
       }else{
@@ -52,7 +54,7 @@ implements Mage_Shipping_Model_Carrier_Interface
   }
 
 
-  protected function _getCustomRate($name, $method_code, $price)
+  protected function _getCustomRate($name, $description, $method_code, $price)
   {
       /** @var Mage_Shipping_Model_Rate_Result_Method $rate */
       $rate = Mage::getModel('shipping/rate_result_method');
@@ -60,7 +62,9 @@ implements Mage_Shipping_Model_Carrier_Interface
       $rate->setCarrierTitle($this->getConfigData('title'));
       $rate->setMethod($method_code);
       $rate->setMethodTitle($name);
+      $rate->setMethodDescription($description);
       $rate->setPrice($price);
+      $rate->setData('test','ovo je logo');
       $rate->setCost(0);
       return $rate;
   }

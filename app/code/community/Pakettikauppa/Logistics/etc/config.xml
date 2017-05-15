@@ -35,6 +35,17 @@
        <class>Pakettikauppa_Logistics_Helper</class>
      </pakettikauppa_logistics>
    </helpers>
+   <events>
+   <sales_order_shipment_save_before>
+     <observers>
+       <pakettikauppa_logistics_ship_before>
+         <type>singleton</type>
+         <class>Pakettikauppa_Logistics_Model_Observer</class>
+         <method>salesOrderShipmentSaveBefore</method>
+       </pakettikauppa_logistics_ship_before>
+     </observers>
+  </sales_order_shipment_save_before>
+   </events>
  </global>
  <default>
    <carriers>

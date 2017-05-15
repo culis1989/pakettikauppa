@@ -64,7 +64,6 @@ implements Mage_Shipping_Model_Carrier_Interface
       $rate->setMethodTitle($name);
       $rate->setMethodDescription($description);
       $rate->setPrice($price);
-      $rate->setData('test','ovo je logo');
       $rate->setCost(0);
       return $rate;
   }

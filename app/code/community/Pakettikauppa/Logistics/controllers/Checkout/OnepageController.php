@@ -2,6 +2,17 @@
 require_once 'Mage/Checkout/controllers/OnepageController.php';
 class Pakettikauppa_Logistics_Checkout_OnepageController
 extends Mage_Checkout_OnepageController{
+  public function savePickuppointZipAction(){
+    $code = $_GET['code'];
+    $checkout = Mage::getSingleton('checkout/session')->getQuote();
+    $methods = $checkout->getShippingAddress()->getShippingRatesCollection()->getData();
+     foreach($methods as $method){
+       if($method['carrier'] == 'pakettikauppa_pickuppoint' && $method['code'] == $code ){
+         $checkout->setData('pickup_point_location', $method['method_description']);
+         $checkout->save();
+       }
+     }
+  }
   public function reloadShippingMethodsAction(){
 
     $cart = Mage::getSingleton('checkout/cart');

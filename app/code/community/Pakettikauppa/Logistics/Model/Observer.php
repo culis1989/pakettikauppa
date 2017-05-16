@@ -10,4 +10,11 @@ class Pakettikauppa_Logistics_Model_Observer {
       $shipment->addTrack($track);
     }
    }
+
+   public function salesOrderSaveBefore($observer){
+      $quote = $observer->getEvent()->getData('quote');
+      $pickup_point_location = Mage::getSingleton('checkout/session')->getQuote()->getData('pickup_point_location');
+      $order = $observer->getEvent()->getData('order');
+      $order->setData('pickup_point_location', $pickup_point_location);
+   }
  }

@@ -7,7 +7,11 @@ extends Mage_Checkout_OnepageController{
   public function savePickuppointZipAction(){
     $client = new Pakettikauppa\Client(array('test_mode' => true));
     $code = $_GET['code'];
-    $zip = $_GET['zip'];
+    if($_GET['zip'] == ''){
+      $zip = Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->getPostcode();
+    }else{
+      $zip = $_GET['zip'];
+    }
     $checkout = Mage::getSingleton('checkout/session')->getQuote();
     $methods = $checkout->getShippingAddress()->getShippingRatesCollection()->getData();
     $is_pickup_point = false;

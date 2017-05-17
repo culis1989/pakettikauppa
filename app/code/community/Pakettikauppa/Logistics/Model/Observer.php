@@ -13,11 +13,40 @@ class Pakettikauppa_Logistics_Model_Observer {
 
    public function salesOrderSaveBefore($observer){
       $quote = $observer->getEvent()->getData('quote');
-      $pickup_point_location = Mage::getSingleton('checkout/session')->getQuote()->getData('pickup_point_location');
-      $pickup_point_zip = Mage::getSingleton('checkout/session')->getQuote()->getData('pickup_point_zip');
+
+      $quote_session = Mage::getSingleton('checkout/session')->getQuote();
+
+      // OLD DATA
+      $pickup_point_location = $quote_session->getData('pickup_point_location');
+      $pickup_point_zip = $quote_session->getData('pickup_point_zip');
+
+      // NEW DATA
+      $pickup_point_provider = $quote_session->getData('pickup_point_provider');
+      $pickup_point_id = $quote_session->getData('pickup_point_id');
+      $pickup_point_name = $quote_session->getData('pickup_point_name');
+      $pickup_point_street_address = $quote_session->getData('pickup_point_street_address');
+      $pickup_point_postcode = $quote_session->getData('pickup_point_postcode');
+      $pickup_point_city = $quote_session->getData('pickup_point_city');
+      $pickup_point_country = $quote_session->getData('pickup_point_country');
+      $pickup_point_description = $quote_session->getData('pickup_point_description');
+
+      if(isset($pickup_point_zip)){
+        $zip = $pickup_point_zip;
+      }else{
+        $zip = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getPostcode();
+      }
 
       $order = $observer->getEvent()->getData('order');
       $order->setData('pickup_point_location', $pickup_point_location);
-      $order->setData('pickup_point_zip', $pickup_point_zip);
+      $order->setData('pickup_point_zip', $zip);
+      $order->setData('pickup_point_provider', $pickup_point_provider);
+      $order->setData('pickup_point_id', $pickup_point_id);
+      $order->setData('pickup_point_name', $pickup_point_name);
+      $order->setData('pickup_point_street_address', $pickup_point_street_address);
+      $order->setData('pickup_point_postcode', $pickup_point_postcode);
+      $order->setData('pickup_point_city', $pickup_point_city);
+      $order->setData('pickup_point_country', $pickup_point_country);
+      $order->setData('pickup_point_description', $pickup_point_description);
+
    }
  }

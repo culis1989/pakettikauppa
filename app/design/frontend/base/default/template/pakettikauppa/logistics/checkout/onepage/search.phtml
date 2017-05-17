@@ -15,7 +15,7 @@
 </style>
 <script>
 function reloadShippingMethods(){
-  var zip = jQuery("#pickuppoint-search").val();
+  var zip = <?php echo Mage::helper('pakettikauppa_logistics')->getZip(); ?>;
   jQuery(".sp-methods").hide();
   jQuery("#pickuppoint-search-please-wait").show();
   jQuery.get("<?php echo $this->getUrl('checkout/onepage/reloadshippingmethods');?>?zip="+zip, function(data, status){

@@ -1,8 +1,7 @@
-
 <div class="field pickuppoint-search">
   <label for="pickuppoint-search"><?php echo $this->__('Choose another delivery Postcode');?></label>
   <div class="input-box">
-    <input type="text" id="pickuppoint-search" name="pickuppoint-search" value="" title="<?php echo $this->__('Postcode');?>" class="input-text">
+    <input type="text" id="pickuppoint-search" name="pickuppoint-search" value="<?php echo Mage::helper('pakettikauppa_logistics')->getZip(); ?>" placeholder="<?php echo $this->__('Choose another delivery Postcode');?>" title="<?php echo $this->__('Postcode');?>" class="input-text">
   </div>
   <button type="button pickuppoint-search" title="Continue" class="button pickuppoint_search" onclick="reloadShippingMethods()"><span><span><?php echo $this->__('Search');?></span></span></button>
   <span class="please-wait" id="pickuppoint-search-please-wait" style="display: none;">

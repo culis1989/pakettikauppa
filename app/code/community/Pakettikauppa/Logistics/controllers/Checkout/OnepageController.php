@@ -16,14 +16,15 @@ extends Mage_Checkout_OnepageController{
   public function reloadShippingMethodsAction(){
 
     $cart = Mage::getSingleton('checkout/cart');
-
-    $zip = $cart->getQuote()->getShippingAddress()->getPostcode();
-    $country = $cart->getQuote()->getShippingAddress()->getCountryId();
-
     $zipcode = $_GET['zip'];
-    $address = $cart->getQuote()->getShippingAddress();
-    $address->setCountryId($country)
-            ->setPostcode($zipcode)
+    $zip_shipping = $cart->getQuote()->getShippingAddress()->getPostcode();
+    $country_shipping = $cart->getQuote()->getShippingAddress()->getCountryId();
+
+    $quote = $cart->getQuote();
+    $quote->setData('pickup_point_zip',$zipcode);
+    $address = $quote->getShippingAddress();
+    $address->setCountryId($country_shipping)
+            ->setPostcode($zip_shipping)
             ->setCollectShippingrates(true);
     $cart->save();
 
@@ -31,14 +32,6 @@ extends Mage_Checkout_OnepageController{
             'name' => 'shipping-method',
             'html' => $this->_getShippingMethodsHtml()
     );
-
-    // RETURN CART TO PREVIOUS STATE
-    $cart = Mage::getSingleton('checkout/cart');
-    $address = $cart->getQuote()->getShippingAddress();
-    $address->setCountryId($country)
-            ->setPostcode($zip)
-            ->setCollectShippingrates(true);
-    $cart->save();
 
     return $this->_prepareDataJSON($result);
 

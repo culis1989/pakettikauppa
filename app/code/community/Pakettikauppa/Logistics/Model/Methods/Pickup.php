@@ -9,12 +9,7 @@ implements Mage_Shipping_Model_Carrier_Interface
   protected $_code = 'pakettikauppa_pickuppoint';
 
   private function getZip(){
-    $zip = Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->getPostcode();
-    if($zip != '-'){
-      return $zip;
-    }else{
-      return false;
-    }
+    return Mage::helper('pakettikauppa_logistics')->getZip();
   }
 
   public function collectRates(Mage_Shipping_Model_Rate_Request $request)

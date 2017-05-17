@@ -31,10 +31,9 @@ function reloadShippingMethods(){
 }
 
 function saveShippingPickuppoint(){
-  var zip = jQuery("#pickuppoint-search").val();
   var code = jQuery("input[name=shipping_method]:checked").val();
-  console.log("code " + code + " | zip: " + zip);
-  jQuery.get("<?php echo $this->getUrl('checkout/onepage/savepickuppointzip');?>?zip="+zip+"&code="+code, function(data, status){
+  console.log("code " + code);
+  jQuery.get("<?php echo $this->getUrl('checkout/onepage/savepickuppointzip');?>?code="+code, function(data, status){
     console.log('quote updated!');
   });
 }

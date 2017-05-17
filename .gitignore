@@ -26,6 +26,21 @@
 /app/design/frontend/base/default/template/*
 !/app/design/frontend/base/default/template/pakettikauppa
 
+!/app/design/adminhtml
+/app/design/adminhtml/*
+!/app/design/adminhtml/default
+/app/design/adminhtml/default/*
+!/app/design/adminhtml/default/default
+/app/design/adminhtml/default/default/*
+!/app/design/adminhtml/default/default/layout
+/app/design/adminhtml/default/default/layout/*
+!/app/design/adminhtml/default/default/layout/pakettikauppa
+
+
+!/app/design/adminhtml/default/default/template
+/app/design/adminhtml/default/default/template/*
+!/app/design/adminhtml/default/default/template/pakettikauppa
+
 # module xml
 !/app/etc
 /app/etc/*

@@ -101,4 +101,13 @@
      </updates>
    </layout>
  </frontend>
+ <adminhtml>
+    <layout>
+      <updates>
+        <orderview>
+          <file>pakettikauppa/orderview.xml</file>
+        </orderview>
+      </updates>
+    </layout>
+  </adminhtml>
 </config>

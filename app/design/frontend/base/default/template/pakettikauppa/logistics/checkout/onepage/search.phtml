@@ -15,14 +15,19 @@
 </style>
 <script>
 function reloadShippingMethods(){
-  var zip = <?php echo Mage::helper('pakettikauppa_logistics')->getZip(); ?>;
-  jQuery(".sp-methods").hide();
-  jQuery("#pickuppoint-search-please-wait").show();
-  jQuery.get("<?php echo $this->getUrl('checkout/onepage/reloadshippingmethods');?>?zip="+zip, function(data, status){
-    jQuery("#pickuppoint-search-please-wait").hide();
-    jQuery(".sp-methods").html(data.update_section.html);
-    jQuery(".sp-methods").show();
-  });
+  var zip = jQuery("#pickuppoint-search").val();
+  console.log(zip);
+  if(zip == ''){
+    alert('PLEASE INSERT ZIP CODE');
+  }else{
+    jQuery(".sp-methods").hide();
+    jQuery("#pickuppoint-search-please-wait").show();
+    jQuery.get("<?php echo $this->getUrl('checkout/onepage/reloadshippingmethods');?>?zip="+zip, function(data, status){
+      jQuery("#pickuppoint-search-please-wait").hide();
+      jQuery(".sp-methods").html(data.update_section.html);
+      jQuery(".sp-methods").show();
+    });
+  }
 }
 
 function saveShippingPickuppoint(){

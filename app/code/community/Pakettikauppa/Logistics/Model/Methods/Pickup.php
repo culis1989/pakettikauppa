@@ -19,10 +19,12 @@ implements Mage_Shipping_Model_Carrier_Interface
       if($this->getZip()){
         $client = new Pakettikauppa\Client(array('test_mode' => true));
         $methods = json_decode($client->searchPickupPoints($this->getZip()));
-        foreach($methods as $method){
-          $description = $method->name.' | '.$method->street_address.', '.$method->city.', '.$method->postcode;
-          $name = $method->provider;
-          $result->append($this->_getCustomRate($name,$description,$method->pickup_point_id, 999));
+        if(count($methods)>0){
+          foreach($methods as $method){
+            $description = $method->name.' | '.$method->street_address.', '.$method->city.', '.$method->postcode;
+            $name = $method->provider;
+            $result->append($this->_getCustomRate($name,$description,$method->pickup_point_id, 999));
+          }
         }
         return $result;
       }else{

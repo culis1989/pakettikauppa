@@ -168,14 +168,12 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
         </div>
         <fieldset>
             <address style="width:50%;float:left;"><?php echo $_order->getShippingAddress()->getFormated(true) ?></address>
-            DEMO
-            <?php //if($this->escapeHtml($_order->getData('pickup_point_location'))){ ?>
+            <?php if (strpos($_order->getShippingMethod(), 'pakettikauppa_pickuppoint') !== false) { ?>
+            <strong>PICKUP POINT DETAILS</strong><br/>
             <address style="width:50%;float:left;">
-                <strong>Pickup Point details</strong><br/>
                 <!--- provider  -->
-                <?php echo $this->escapeHtml($_order->getData('pickup_point_provider')); ?><br/>
+                <?php echo $this->escapeHtml($_order->getData('pickup_point_provider')); ?> (<?php echo $this->escapeHtml($_order->getData('pickup_point_id')); ?>)<br/>
                 <!-- id:name -->
-                <?php echo $this->escapeHtml($_order->getData('pickup_point_id')); ?>:
                 <?php echo $this->escapeHtml($_order->getData('pickup_point_name')); ?><br/>
                 <!-- street address -->
                 <?php echo $this->escapeHtml($_order->getData('pickup_point_street_address')); ?><br/>
@@ -184,7 +182,7 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
                 <?php echo $this->escapeHtml($_order->getData('pickup_point_country')); ?>,
                 <?php echo $this->escapeHtml($_order->getData('pickup_point_postcode')); ?>
             </address>
-            <?php //} ?>
+            <?php } ?>
         </fieldset>
 
     </div>

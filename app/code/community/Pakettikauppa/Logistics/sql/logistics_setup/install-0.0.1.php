@@ -3,6 +3,14 @@ $installer = $this;
 $installer->startSetup();
 $order = $installer->getTable('sales_flat_order');
 $installer->getConnection()
+    ->addColumn($order, 'home_delivery_service_provider', array(
+            'nullable' => true,
+            'length' => 255,
+            'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
+            'comment' => 'Home Delivery Provider'
+        )
+    );
+$installer->getConnection()
     ->addColumn($order, 'pickup_point_provider', array(
             'nullable' => true,
             'length' => 255,
@@ -83,6 +91,14 @@ $installer->getConnection()
         )
     );
 $quote = $installer->getTable('sales_flat_quote');
+$installer->getConnection()
+  ->addColumn($quote, 'home_delivery_service_provider', array(
+          'nullable' => true,
+          'length' => 255,
+          'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
+          'comment' => 'Home Delivery Provider'
+      )
+  );
 $installer->getConnection()
   ->addColumn($quote, 'pickup_point_provider', array(
           'nullable' => true,

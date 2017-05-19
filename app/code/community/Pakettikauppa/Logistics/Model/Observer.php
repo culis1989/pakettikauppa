@@ -16,7 +16,7 @@ class Pakettikauppa_Logistics_Model_Observer {
      $quote_session = Mage::getSingleton('checkout/session')->getQuote();
      $shipping_method_code = $quote_session->getShippingAddress()->getShippingMethod();
 
-     if (strpos($shipping_method_code, 'pakettikauppa_pickuppoint') !== false) {
+     if(Mage::helper('pakettikauppa_logistics')->isPakettikauppa($shipping_method_code)){
 
         $quote = $observer->getEvent()->getData('quote');
         
@@ -25,6 +25,7 @@ class Pakettikauppa_Logistics_Model_Observer {
         $pickup_point_zip = $quote_session->getData('pickup_point_zip');
 
         // NEW DATA
+        $home_delivery_service_provider = $quote_session->getData('home_delivery_service_provider');
         $pickup_point_provider = $quote_session->getData('pickup_point_provider');
         $pickup_point_id = $quote_session->getData('pickup_point_id');
         $pickup_point_name = $quote_session->getData('pickup_point_name');
@@ -51,6 +52,7 @@ class Pakettikauppa_Logistics_Model_Observer {
         $order->setData('pickup_point_city', $pickup_point_city);
         $order->setData('pickup_point_country', $pickup_point_country);
         $order->setData('pickup_point_description', $pickup_point_description);
+        $order->setData('home_delivery_service_provider',$home_delivery_service_provider);
       }
    }
  }

@@ -56,14 +56,22 @@
 
                         <?php endif; ?>
                         <label for="s_method_<?php echo $_rate->getCode() ?>">
-                          <span class="method_title"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?></span>
+                          <?php
+                          $icon = Mage::helper('pakettikauppa_logistics')->getMethodImage($_rate->getCode(),$this->escapeHtml($_rate->getMethodTitle()));
+                          if($icon){
+                            echo $icon;
+                          }else{ ?>
+                            <span class="method_title"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?></span>
+                          <?php } ?>
                           <span class="method_description"><?php echo $this->escapeHtml($_rate->getMethodDescription()) ?></span>
-                          <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
-                          <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
-                          <?php echo $_excl; ?>
-                          <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
-                              (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
-                          <?php endif; ?>
+                          <span class="method_price_logistics">
+                            <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                            <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                            <?php echo $_excl; ?>
+                            <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                            <?php endif; ?>
+                          </span>
 
                         </label>
                    <?php endif ?>

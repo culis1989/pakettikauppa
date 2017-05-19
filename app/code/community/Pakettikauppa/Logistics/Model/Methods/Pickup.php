@@ -65,4 +65,18 @@ implements Mage_Shipping_Model_Carrier_Interface
       $rate->setCost(0);
       return $rate;
   }
+
+    public function isTrackingAvailable()
+    {
+        return true;
+    }
+
+    public function getTrackingInfo($tracking)
+    {
+      $track = Mage::getModel('shipping/tracking_result_status');
+      $track->setUrl('http://pakettikauppa.local/pakettikauppalogistics/tracking?t='.$tracking)
+              ->setTracking($tracking)
+              ->setCarrierTitle('Posti');
+      return $track;
+    }
 }

@@ -14,8 +14,7 @@ class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function getMethodImage($code,$provider){
-      //if (strpos($code, 'pakettikauppa_pickuppoint') !== false || strpos($code, 'pakettikauppa_homedelivery') !== false) {
-      if (strpos($code, 'pakettikauppa_pickuppoint') !== false) {
+      if (strpos($code, 'pakettikauppa_pickuppoint') !== false || strpos($code, 'pakettikauppa_homedelivery') !== false) {
         $latin_provider = iconv('UTF-8', 'ASCII//TRANSLIT', $provider);
         $icon = strtolower(str_replace(' ', '_', $latin_provider));
         return '<img class="shipping_provider_logo_logistics" src="/media/pakettikauppa/providers/'.$icon.'.png" alt="'.$provider.'"/>';

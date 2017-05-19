@@ -30,8 +30,28 @@ extends Mage_Checkout_OnepageController{
               $checkout->setData('pickup_point_city', $pickup_method->city);
               $checkout->setData('pickup_point_country', $pickup_method->country);
               $checkout->setData('pickup_point_description', $pickup_method->description);
+
               $checkout->save();
               $is_pickup_point = true;
+           }
+         }
+       }
+
+       if($method['carrier'] == 'pakettikauppa_homedelivery' && $method['code'] == $code ){
+         $homedelivery_methods = json_decode($client->listShippingMethods());
+         foreach($homedelivery_methods as $homedelivery_method){
+           if('pakettikauppa_homedelivery_'.$homedelivery_method->shipping_method_code == $code){
+             $checkout->setData('home_delivery_service_provider', $homedelivery_method->service_provider);
+             $checkout->unsetData('pickup_point_provider');
+             $checkout->unsetData('pickup_point_id');
+             $checkout->unsetData('pickup_point_name');
+             $checkout->unsetData('pickup_point_street_address');
+             $checkout->unsetData('pickup_point_postcode');
+             $checkout->unsetData('pickup_point_city');
+             $checkout->unsetData('pickup_point_country');
+             $checkout->unsetData('pickup_point_description');
+             $checkout->save();
+             $is_pickup_point = true;
            }
          }
        }
@@ -47,6 +67,7 @@ extends Mage_Checkout_OnepageController{
        $checkout->unsetData('pickup_point_city');
        $checkout->unsetData('pickup_point_country');
        $checkout->unsetData('pickup_point_description');
+       $checkout->unsetData('home_delivery_service_provider');
        $checkout->save();
      }
 

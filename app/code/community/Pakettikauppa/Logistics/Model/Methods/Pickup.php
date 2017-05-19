@@ -53,6 +53,7 @@ implements Mage_Shipping_Model_Carrier_Interface
 
   protected function _getCustomRate($name, $description, $method_code, $price)
   {
+      $price = $this->getConfigData('price');
       /** @var Mage_Shipping_Model_Rate_Result_Method $rate */
       $rate = Mage::getModel('shipping/rate_result_method');
       $rate->setCarrier($this->_code);

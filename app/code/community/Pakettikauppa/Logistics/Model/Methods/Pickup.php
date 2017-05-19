@@ -41,12 +41,12 @@ implements Mage_Shipping_Model_Carrier_Interface
     if($this->getZip()){
       $client = new Pakettikauppa\Client(array('test_mode' => true));
       $methods = json_decode($client->searchPickupPoints($this->getZip()));
-      foreach($methods as $carrier){
-        $array['shipping_'.$carrier->shipping_method_code] = $carrier->name;
+      if(count($methods)>0){
+        foreach($methods as $carrier){
+          $array['shipping_'.$carrier->shipping_method_code] = $carrier->name;
+        }
+        return $array;
       }
-      return $array;
-    }else{
-      return false;
     }
   }
 

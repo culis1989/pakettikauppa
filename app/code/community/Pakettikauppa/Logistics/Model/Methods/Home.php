@@ -13,8 +13,10 @@ implements Mage_Shipping_Model_Carrier_Interface
       $result = Mage::getModel('shipping/rate_result');
       $client = new Pakettikauppa\Client(array('test_mode' => true));
       $methods = json_decode($client->listShippingMethods());
-      foreach($methods as $method){
-        $result->append($this->_getCustomRate($method->name,$method->shipping_method_code, 999));
+      if(count($methods)>0){
+        foreach($methods as $method){
+          $result->append($this->_getCustomRate($method->name,$method->shipping_method_code, 999));
+        }
       }
       return $result;
 
@@ -28,15 +30,22 @@ implements Mage_Shipping_Model_Carrier_Interface
   {
     $client = new Pakettikauppa\Client(array('test_mode' => true));
     $methods = json_decode($client->listShippingMethods());
-    foreach($methods as $carrier){
-      $array['shipping_'.$carrier->shipping_method_code] = $carrier->name;
+    if(count($methods)>0){
+      foreach($methods as $carrier){
+        $array['shipping_'.$carrier->shipping_method_code] = $carrier->name;
+      }
+      return $array;
     }
-    return $array;
+
   }
 
 
   protected function _getCustomRate($name, $method_code, $price)
   {
+
+      // EDIT SHIPPING PRICE HERE
+      $price = $this->getConfigData('price');
+
       /** @var Mage_Shipping_Model_Rate_Result_Method $rate */
       $rate = Mage::getModel('shipping/rate_result_method');
       $rate->setCarrier($this->_code);

@@ -73,10 +73,13 @@ implements Mage_Shipping_Model_Carrier_Interface
 
     public function getTrackingInfo($tracking)
     {
+      $data = explode(",", $tracking);
+      $tracking = $data[0];
+      $name = $data[1];
       $track = Mage::getModel('shipping/tracking_result_status');
       $track->setUrl('http://pakettikauppa.local/pakettikauppalogistics/tracking?t='.$tracking)
               ->setTracking($tracking)
-              ->setCarrierTitle('Posti');
+              ->setCarrierTitle($name);
       return $track;
     }
 }

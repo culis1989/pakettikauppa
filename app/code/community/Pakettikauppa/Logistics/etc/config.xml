@@ -6,6 +6,11 @@
    </Pakettikauppa_Logistics>
  </modules>
  <global>
+  <blocks>
+    <logistics>
+      <class>Pakettikauppa_Logistics_Block</class>
+    </logistics>
+  </blocks>
    <models>
      <pakettikauppa_methods>
        <class>Pakettikauppa_Logistics_Model_Methods</class>
@@ -85,13 +90,13 @@
           </modules>
         </args>
       </checkout>
-       <ultimateshipping>
+       <pakettikauppalogistics>
          <use>standard</use>
          <args>
            <module>Pakettikauppa_Logistics</module>
-           <frontName>pakettikauppalogistics</frontName>
+           <frontName>track</frontName>
          </args>
-       </ultimateshipping>
+       </pakettikauppalogistics>
    </routers>
    <layout>
      <updates>

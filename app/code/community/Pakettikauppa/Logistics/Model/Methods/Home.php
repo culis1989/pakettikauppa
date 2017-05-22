@@ -69,8 +69,8 @@ implements Mage_Shipping_Model_Carrier_Interface
     $tracking = $data[0];
     $name = $data[1];
     $track = Mage::getModel('shipping/tracking_result_status');
-    $base_url = Mage::app()->getStore()->getUrl();
-    $track->setUrl($base_url.'pakettikauppalogistics/tracking?t='.$tracking)
+    $base_url = Mage::getUrl('pakettikauppalogistics/shipment/index/');
+    $track->setUrl($base_url.'code/'.$tracking)
             ->setTracking($tracking)
             ->setCarrierTitle($name);
     return $track;

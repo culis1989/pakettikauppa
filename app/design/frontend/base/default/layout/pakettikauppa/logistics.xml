@@ -33,4 +33,15 @@
     </reference>
   </onestepcheckout_index_index>
   <!-- ONESTEP CHECKOUT OVERRIDE ENDS HERE -->
+
+  <!-- TRACKING BLOCK STARTS HERE -->
+    <pakettikauppalogistics_shipment_index>
+      <reference name="root">
+        <action method="setTemplate"><template>page/1column.phtml</template></action>
+      </reference>
+      <reference name="content">
+        <block type="logistics/tracking" name="tracking" template="pakettikauppa/logistics/tracking/track.phtml" />
+      </reference>
+    </pakettikauppalogistics_shipment_index>
+  <!-- TRACKING BLOCK ENDS HERE -->
 </layout>

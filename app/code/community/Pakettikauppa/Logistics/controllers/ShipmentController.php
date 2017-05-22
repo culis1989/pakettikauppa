@@ -7,7 +7,6 @@ class Pakettikauppa_Logistics_ShipmentController extends Mage_Core_Controller_Fr
     $this->loadLayout();
     $this->getLayout()->getBlock('tracking')->assign('code', $this->getRequest()->getParam('code'));
     $this->renderLayout();
-
   }
 
 }

@@ -1,11 +1,8 @@
 <?php
-require_once(Mage::getBaseDir('lib') . '/pakettikauppa/autoload.php');
-require_once(Mage::getBaseDir('lib') . '/pakettikauppa/Client.php');
 require_once 'Mage/Checkout/controllers/OnepageController.php';
 class Pakettikauppa_Logistics_Checkout_OnepageController
 extends Mage_Checkout_OnepageController{
   public function savePickuppointZipAction(){
-    $client = new Pakettikauppa\Client(array('test_mode' => true));
     $code = $_GET['code'];
     $quote = Mage::getSingleton('checkout/cart')->getQuote();
     $pickup_point_zip = $quote->getData('pickup_point_zip');
@@ -19,7 +16,7 @@ extends Mage_Checkout_OnepageController{
     $is_pickup_point = false;
      foreach($methods as $method){
        if($method['carrier'] == 'pakettikauppa_pickuppoint' && $method['code'] == $code ){
-         $pickup_methods = json_decode($client->searchPickupPoints($zip));
+         $pickup_methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($zip);
          foreach($pickup_methods as $pickup_method){
            if('pakettikauppa_pickuppoint_'.$pickup_method->pickup_point_id == $code){
               $checkout->setData('pickup_point_provider', $pickup_method->provider);
@@ -38,7 +35,7 @@ extends Mage_Checkout_OnepageController{
        }
 
        if($method['carrier'] == 'pakettikauppa_homedelivery' && $method['code'] == $code ){
-         $homedelivery_methods = json_decode($client->listShippingMethods());
+         $homedelivery_methods = Mage::helper('pakettikauppa_logistics/API')->getHomeDelivery();
          foreach($homedelivery_methods as $homedelivery_method){
            if('pakettikauppa_homedelivery_'.$homedelivery_method->shipping_method_code == $code){
              $checkout->setData('home_delivery_service_provider', $homedelivery_method->service_provider);

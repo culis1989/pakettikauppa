@@ -19,14 +19,28 @@ use Pakettikauppa\Client;
 
 class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
 {
-  function __construct(){
+  protected $test_mode;
 
+  function __construct(){
+    $this->test_mode = true;
   }
 
   public function getTracking($code){
-    $client = new Client(array('test_mode' => true));
+    $client = new Client(array('test_mode' => $this->test_mode));
     $tracking = $client->getShipmentStatus($code);
     return json_decode($tracking);
+  }
+
+  public function getHomeDelivery(){
+    $client = new Client(array('test_mode' => $this->test_mode));
+    $result = json_decode($client->listShippingMethods());
+    return $result;
+  }
+
+  public function getPickupPoints($zip){
+    $client = new Client(array('test_mode' => $this->test_mode));
+    $result = json_decode($client->searchPickupPoints($zip));
+    return $result;
   }
 
 }

@@ -1,6 +1,4 @@
 <?php
-require_once(Mage::getBaseDir('lib') . '/pakettikauppa/autoload.php');
-require_once(Mage::getBaseDir('lib') . '/pakettikauppa/Client.php');
 class Pakettikauppa_Logistics_Model_Methods_Pickup
 extends Mage_Shipping_Model_Carrier_Abstract
 implements Mage_Shipping_Model_Carrier_Interface
@@ -17,8 +15,7 @@ implements Mage_Shipping_Model_Carrier_Interface
       /** @var Mage_Shipping_Model_Rate_Result $result */
       $result = Mage::getModel('shipping/rate_result');
       if($this->getZip()){
-        $client = new Pakettikauppa\Client(array('test_mode' => true));
-        $methods = json_decode($client->searchPickupPoints($this->getZip()));
+        $methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($this->getZip());
         if(count($methods)>0){
           foreach($methods as $method){
             $description = $method->name.' | '.$method->street_address.', '.$method->city.', '.$method->postcode;
@@ -39,8 +36,7 @@ implements Mage_Shipping_Model_Carrier_Interface
   public function getAllowedMethods()
   {
     if($this->getZip()){
-      $client = new Pakettikauppa\Client(array('test_mode' => true));
-      $methods = json_decode($client->searchPickupPoints($this->getZip()));
+      $methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($this->getZip());
       if(count($methods)>0){
         foreach($methods as $carrier){
           $array['shipping_'.$carrier->shipping_method_code] = $carrier->name;

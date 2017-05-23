@@ -14,13 +14,17 @@ class Pakettikauppa_Logistics_Model_Observer {
         if(Mage::helper('pakettikauppa_logistics')->getMethod($shipping_method)=='pakettikauppa_pickuppoint'){
           $carrier = $shipment->getOrder()->getData('pickup_point_provider');
         }
-        
+
+        $orderId = $shipment->getOrder()->getID();
+        $order = Mage::getModel('sales/order')->load($orderId);
+
+        $tracking_number = Mage::helper('pakettikauppa_logistics/API')->createShipment($order);
+
         // GET TRACKING NUMBER HERE
-        $trcking_number = 'JJFITESTLABEL300';
         $track = Mage::getModel('sales/order_shipment_track')
                         ->setCarrierCode($code)
                         ->setTitle('Home Delivery')
-                        ->setNumber($trcking_number.','.$carrier);
+                        ->setNumber($tracking_number.','.$carrier);
         $shipment->addTrack($track);
       }
     }

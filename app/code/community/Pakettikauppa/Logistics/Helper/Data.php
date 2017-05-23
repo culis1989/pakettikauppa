@@ -1,6 +1,53 @@
 <?php
 class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
 {
+
+    public function getShipmentStatusText($code){
+      switch ($code) {
+          case "13":
+              $status = "Item is collected from sender - picked up";
+              break;
+          case "20":
+              $status = "Exception";
+              break;
+          case "22":
+              $status = "Item has been handed over to the recipient";
+              break;
+          case "31":
+              $status = "Item is in transport";
+              break;
+          case "38":
+              $status = "C.O.D payment is paid to the sender";
+              break;
+          case "45":
+              $status = "Informed consignee of arrival";
+              break;
+          case "48":
+              $status = "Item is loaded onto a means of transport";
+              break;
+          case "56":
+              $status = "Item not delivered – delivery attempt made";
+              break;
+          case "68":
+              $status = "Pre-information is received from sender";
+              break;
+          case "71":
+              $status = "Item is ready for delivery transportation";
+              break;
+          case "77":
+              $status = "Item is returning to the sender";
+              break;
+          case "91":
+              $status = "Item is arrived to a post office";
+              break;
+          case "99":
+              $status = "Outbound";
+              break;
+          default:
+              $status = "Unknown";
+      }
+      return $status;
+    }
     public function getZip(){
       $zip_pickup = Mage::getSingleton('checkout/cart')->getQuote()->getData('pickup_point_zip');
       $zip_shipping = Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->getPostcode();
@@ -47,5 +94,5 @@ class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
         return $shipping_code;
       }
     }
-    
+
   }

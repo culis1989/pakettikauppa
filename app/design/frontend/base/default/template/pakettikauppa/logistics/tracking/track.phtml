@@ -1,1 +1,16 @@
 <h1><?php echo $this->__('Tracking: '); ?><?php echo $this->getTracking(); ?></h1>
+<?php
+  $tracking = $this->getTrackingStatus();
+  if(!empty($tracking)){ ?>
+    <?php foreach($tracking as $track){
+          $status_text = Mage::helper('pakettikauppa_logistics')->getShipmentStatusText($track->status_code);
+          echo '<p>'.$this->__('Status updated at: ').$track->message_created.'</p>';
+          echo '<p>'.$this->__('Reference Number: ').$track->reference.'</p>';
+          echo '<p>'.$this->__('Reference Number: ').$track->status_code .'</p>';
+          echo '<p>'.$this->__('Status: ').$status_text.'</p>';
+          echo '<hr>';
+    }
+  }else{
+    echo '<p>'.$this->__('No tracking information available.').'</p>';
+  }
+?>

@@ -16,7 +16,7 @@ class Pakettikauppa_Logistics_Model_Observer {
         }
 
         // GET TRACKING NUMBER HERE
-        $trcking_number = '824343454454';
+        $trcking_number = 'JJFITESTLABEL300';
         $track = Mage::getModel('sales/order_shipment_track')
                         ->setCarrierCode($code)
                         ->setTitle('Home Delivery')

@@ -32,12 +32,51 @@ class Pakettikauppa_Logistics_Model_Observer {
 
    public function salesOrderSaveBefore($observer){
 
-     $quote = Mage::getSingleton('checkout/session')->getQuote();
-     $shipping_method_code = $quote->getShippingAddress()->getShippingMethod();
 
-     if(Mage::helper('pakettikauppa_logistics')->isPakettikauppa($shipping_method_code)){
        $order = $observer->getEvent()->getData('order');
-       Mage::helper('pakettikauppa_logistics/API')->writeQuoteToOrder($quote, $order);
-      }
-   }
- }
+       $quote = Mage::getSingleton('checkout/session')->getQuote();
+       $shipping_method_code = $quote->getShippingAddress()->getShippingMethod();
+
+
+       if(Mage::helper('pakettikauppa_logistics')->isPakettikauppa($shipping_method_code)){
+
+         $method = Mage::helper('pakettikauppa_logistics')->getMethod($shipping_method_code);
+         $method_available = false;
+
+         // PICKUP POINT
+         if($method == 'pakettikauppa_pickuppoint'){
+           $zip = Mage::helper('pakettikauppa_logistics')->getZip();
+           $pickup_methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($zip);
+           foreach($pickup_methods as $pickup_method){
+             if('pakettikauppa_pickuppoint_'.$pickup_method->pickup_point_id == $shipping_method_code){
+                $order->setData('pickup_point_provider', $pickup_method->provider);
+                $order->setData('pickup_point_id', $pickup_method->pickup_point_id);
+                $order->setData('pickup_point_name', $pickup_method->name);
+                $order->setData('pickup_point_street_address', $pickup_method->street_address);
+                $order->setData('pickup_point_postcode', $pickup_method->postcode);
+                $order->setData('pickup_point_city', $pickup_method->city);
+                $order->setData('pickup_point_country', $pickup_method->country);
+                $order->setData('pickup_point_description', $pickup_method->description);
+                $method_available = true;
+             }
+           }
+         }
+
+         // HOME DELIVERY
+         if($method == 'pakettikauppa_homedelivery'){
+           $homedelivery_methods = Mage::helper('pakettikauppa_logistics/API')->getHomeDelivery();
+           foreach($homedelivery_methods as $homedelivery_method){
+             if('pakettikauppa_homedelivery_'.$homedelivery_method->shipping_method_code == $shipping_method_code){
+               $order->setData('home_delivery_service_provider', $homedelivery_method->service_provider);
+               $method_available = true;
+             }
+           }
+       }
+
+       if(!$method_available){
+         Mage::throwException('Method error, please choose another method.');
+       }
+
+     }
+  }
+}

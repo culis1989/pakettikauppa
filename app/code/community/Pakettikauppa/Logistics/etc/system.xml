@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+  <tabs>
+    <pakettikauppa translate="label" module="pakettikauppa_logistics">
+        <label>Pakettikauppa</label>
+        <sort_order>100</sort_order>
+    </pakettikauppa>
+  </tabs>
   <sections>
+    <pakettikauppa translate="label" module="pakettikauppa_logistics">
+           <label>Extension Options</label>
+           <tab>pakettikauppa</tab>
+           <sort_order>1000</sort_order>
+           <show_in_default>1</show_in_default>
+           <show_in_website>1</show_in_website>
+           <show_in_store>1</show_in_store>
+           <groups>
+               <api translate="label" module="pakettikauppa_logistics">
+                   <label>General</label>
+                   <frontend_type>text</frontend_type>
+                   <sort_order>1000</sort_order>
+                   <show_in_default>1</show_in_default>
+                   <show_in_website>1</show_in_website>
+                   <show_in_store>1</show_in_store>
+                   <fields>
+                       <key translate="label">
+                           <label>API key:</label>
+                           <comment>Insert your pakettikauppa api key here.</comment>
+                           <frontend_type>text</frontend_type>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       </key>
+                       <secret translate="label">
+                           <label>Secret key:</label>
+                           <comment>Insert your pakettikauppa secret key here.</comment>
+                           <frontend_type>text</frontend_type>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       </secret>
+                   </fields>
+               </api>
+               <sender translate="label" module="pakettikauppa_logistics">
+                   <label>Store information</label>
+                   <frontend_type>text</frontend_type>
+                   <sort_order>1001</sort_order>
+                   <show_in_default>1</show_in_default>
+                   <show_in_website>1</show_in_website>
+                   <show_in_store>1</show_in_store>
+                   <fields>
+                       <name translate="label">
+                           <label>Store name:</label>
+                           <comment>As shown on package.</comment>
+                           <frontend_type>text</frontend_type>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       </name>
+                       <address translate="label">
+                           <label>Storage Address:</label>
+                           <comment>Adress where pakettikauppa can take the package.</comment>
+                           <frontend_type>text</frontend_type>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       </address>
+                       <postcode translate="label">
+                           <label>Storage Postcode:</label>
+                           <frontend_type>text</frontend_type>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       </postcode>
+                       <city translate="label">
+                           <label>Storage City:</label>
+                           <frontend_type>text</frontend_type>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       </city>
+                       <country translate="label">
+                           <label>Storage Country:</label>
+                           <frontend_type>text</frontend_type>
+                           <sort_order>20</sort_order>
+                           <show_in_default>1</show_in_default>
+                           <show_in_website>1</show_in_website>
+                           <show_in_store>1</show_in_store>
+                       </country>
+                   </fields>
+               </sender>
+           </groups>
+       </pakettikauppa>
     <carriers>
       <groups>
         <pakettikauppa_pickuppoint translate="label">

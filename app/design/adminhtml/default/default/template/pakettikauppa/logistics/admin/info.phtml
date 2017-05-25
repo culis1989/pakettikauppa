@@ -168,7 +168,7 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
         </div>
         <fieldset>
             <address style="width:50%;float:left;"><?php echo $_order->getShippingAddress()->getFormated(true) ?></address>
-            <?php if (strpos($_order->getShippingMethod(), 'pakettikauppa_pickuppoint') !== false) { ?>
+            <?php if (strpos($_order->getShippingMethod(), 'pktkp_pickuppoint') !== false) { ?>
             <strong>PICKUP POINT DETAILS</strong><br/>
             <address style="width:50%;float:left;">
                 <!--- provider  -->

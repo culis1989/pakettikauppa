@@ -61,7 +61,7 @@ class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function getMethodImage($code,$provider){
-      if (strpos($code, 'pakettikauppa_pickuppoint') !== false || strpos($code, 'pakettikauppa_homedelivery') !== false) {
+      if (strpos($code, 'pktkp_pickuppoint') !== false || strpos($code, 'pktkp_homedelivery') !== false) {
         $latin_provider = iconv('UTF-8', 'ASCII//TRANSLIT', $provider);
         $icon = strtolower(str_replace(' ', '_', $latin_provider));
         return '<img class="shipping_provider_logo_logistics" src="/media/pakettikauppa/providers/'.$icon.'.png" alt="'.$provider.'"/>';
@@ -71,7 +71,7 @@ class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function isPakettikauppa($code){
-      if(strpos($code, 'pakettikauppa_pickuppoint') !== false || strpos($code, 'pakettikauppa_homedelivery') !== false) {
+      if(strpos($code, 'pktkp_pickuppoint') !== false || strpos($code, 'pktkp_homedelivery') !== false) {
         return true;
       }else{
         return false;
@@ -79,18 +79,18 @@ class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     public function getMethod($code){
-      if(strpos($code, 'pakettikauppa_pickuppoint') !== false) {
-        return 'pakettikauppa_pickuppoint';
+      if(strpos($code, 'pktkp_pickuppoint') !== false) {
+        return 'pktkp_pickuppoint';
       }
-      if(strpos($code, 'pakettikauppa_homedelivery') !== false) {
-        return 'pakettikauppa_homedelivery';
+      if(strpos($code, 'pktkp_homedelivery') !== false) {
+        return 'pktkp_homedelivery';
       }
     }
 
     public function getCode($code){
-      if(strpos($code, 'pakettikauppa_pickuppoint') !== false || strpos($code, 'pakettikauppa_homedelivery') !== false) {
-        $shipping_code = str_replace('pakettikauppa_pickuppoint', '', $code);
-        $shipping_code = str_replace('pakettikauppa_homedelivery', '', $shipping_code);
+      if(strpos($code, 'pktkp_pickuppoint') !== false || strpos($code, 'pktkp_homedelivery') !== false) {
+        $shipping_code = str_replace('pktkp_pickuppoint', '', $code);
+        $shipping_code = str_replace('pktkp_homedelivery', '', $shipping_code);
         return $shipping_code;
       }
     }

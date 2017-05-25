@@ -3,7 +3,7 @@ class Pakettikauppa_Logistics_Model_Methods_Home
 extends Mage_Shipping_Model_Carrier_Abstract
 implements Mage_Shipping_Model_Carrier_Interface
 {
-  protected $_code = 'pakettikauppa_homedelivery';
+  protected $_code = 'pktkp_homedelivery';
 
   public function collectRates(Mage_Shipping_Model_Rate_Request $request)
   {

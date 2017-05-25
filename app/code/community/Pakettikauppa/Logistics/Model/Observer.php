@@ -8,10 +8,10 @@ class Pakettikauppa_Logistics_Model_Observer {
 
         $code = Mage::helper('pakettikauppa_logistics')->getMethod($shipping_method);
 
-        if(Mage::helper('pakettikauppa_logistics')->getMethod($shipping_method)=='pakettikauppa_homedelivery'){
+        if(Mage::helper('pakettikauppa_logistics')->getMethod($shipping_method)=='pktkp_homedelivery'){
           $carrier = $shipment->getOrder()->getData('home_delivery_service_provider');
         }
-        if(Mage::helper('pakettikauppa_logistics')->getMethod($shipping_method)=='pakettikauppa_pickuppoint'){
+        if(Mage::helper('pakettikauppa_logistics')->getMethod($shipping_method)=='pktkp_pickuppoint'){
           $carrier = $shipment->getOrder()->getData('pickup_point_provider');
         }
 
@@ -44,11 +44,11 @@ class Pakettikauppa_Logistics_Model_Observer {
          $method_available = false;
 
          // PICKUP POINT
-         if($method == 'pakettikauppa_pickuppoint'){
+         if($method == 'pktkp_pickuppoint'){
            $zip = Mage::helper('pakettikauppa_logistics')->getZip();
            $pickup_methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($zip);
            foreach($pickup_methods as $pickup_method){
-             if('pakettikauppa_pickuppoint_'.$pickup_method->pickup_point_id == $shipping_method_code){
+             if('pktkp_pickuppoint_'.$pickup_method->pickup_point_id == $shipping_method_code){
                 $order->setData('pickup_point_provider', $pickup_method->provider);
                 $order->setData('pickup_point_id', $pickup_method->pickup_point_id);
                 $order->setData('pickup_point_name', $pickup_method->name);
@@ -63,10 +63,10 @@ class Pakettikauppa_Logistics_Model_Observer {
          }
 
          // HOME DELIVERY
-         if($method == 'pakettikauppa_homedelivery'){
+         if($method == 'pktkp_homedelivery'){
            $homedelivery_methods = Mage::helper('pakettikauppa_logistics/API')->getHomeDelivery();
            foreach($homedelivery_methods as $homedelivery_method){
-             if('pakettikauppa_homedelivery_'.$homedelivery_method->shipping_method_code == $shipping_method_code){
+             if('pktkp_homedelivery_'.$homedelivery_method->shipping_method_code == $shipping_method_code){
                $order->setData('home_delivery_service_provider', $homedelivery_method->service_provider);
                $method_available = true;
              }

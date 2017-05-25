@@ -4,7 +4,7 @@ extends Mage_Shipping_Model_Carrier_Abstract
 implements Mage_Shipping_Model_Carrier_Interface
 {
 
-  protected $_code = 'pakettikauppa_pickuppoint';
+  protected $_code = 'pktkp_pickuppoint';
 
   private function getZip(){
     return Mage::helper('pakettikauppa_logistics')->getZip();

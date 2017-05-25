@@ -63,22 +63,22 @@
  </global>
  <default>
    <carriers>
-     <pakettikauppa_homedelivery>
+     <pktkp_homedelivery>
        <active>1</active>
        <sallowspecific>0</sallowspecific>
        <model>pakettikauppa_methods/home</model>
        <name>Pakettikauppa Home Delivery</name>
        <price>10.00</price>
        <title>Pakettikauppa Home Delivery</title>
-     </pakettikauppa_homedelivery>
-     <pakettikauppa_pickuppoint>
+     </pktkp_homedelivery>
+     <pktkp_pickuppoint>
        <active>1</active>
        <sallowspecific>0</sallowspecific>
        <model>pakettikauppa_methods/pickup</model>
        <name>Pakettikauppa Pickup Point</name>
        <price>20.00</price>
        <title>Pakettikauppa Pickup Point</title>
-     </pakettikauppa_pickuppoint>
+     </pktkp_pickuppoint>
    </carriers>
  </default>
  <frontend>

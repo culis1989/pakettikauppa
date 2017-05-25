@@ -18,7 +18,7 @@ implements Mage_Shipping_Model_Carrier_Interface
         $methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($this->getZip());
         if(count($methods)>0){
           foreach($methods as $method){
-            $description = $method->provider.' - '.$method->name.' | '.$method->street_address.', '.$method->city.', '.$method->postcode;
+            $description = '('.$method->provider.') '.$method->name.' | '.$method->street_address.', '.$method->city.', '.$method->postcode;
             $name = $method->provider;
             $result->append($this->_getCustomRate($name,$description,$method->pickup_point_id, 999));
           }

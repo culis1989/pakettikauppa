@@ -57,13 +57,22 @@
                         <?php endif; ?>
                         <label for="s_method_<?php echo $_rate->getCode() ?>">
                           <?php
-                          $icon = Mage::helper('pakettikauppa_logistics')->getMethodImage($_rate->getCode(),$this->escapeHtml($_rate->getMethodTitle()));
-                          if($icon){
-                            echo $icon;
-                          }else{ ?>
-                            <span class="method_title"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?></span>
-                          <?php } ?>
-                          <span class="method_description"><?php echo $this->escapeHtml($_rate->getMethodDescription()) ?></span>
+                          $is_pkptk = Mage::helper('pakettikauppa_logistics')->isPakettikauppa($_rate->getCode());
+                          if($is_pkptk){
+                            $method = Mage::helper('pakettikauppa_logistics')->getMethod($_rate->getCode());
+                            if($method=='pktkp_pickuppoint'){
+                              echo Mage::helper('pakettikauppa_logistics')->getMethodImage($_rate->getCode(),$this->escapeHtml($_rate->getMethodDescription()));
+                              echo '<span class="method_description">'.$this->escapeHtml($_rate->getMethodTitle()).'</span>';
+                            }
+                            if($method=='pktkp_homedelivery'){
+                              echo  Mage::helper('pakettikauppa_logistics')->getMethodImage($_rate->getCode(),$this->escapeHtml($_rate->getMethodTitle()));
+                              echo '<span class="method_description">'.$this->escapeHtml($_rate->getMethodDescription()).'</span>';
+                            }
+                          }else{
+                            echo '<span class="method_title">'.$this->escapeHtml($_rate->getMethodTitle()).'</span>';
+                            echo '<span class="method_description">'.$this->escapeHtml($_rate->getMethodDescription()).'</span>';
+                          }
+                          ?>
                           <span class="method_price_logistics">
                             <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
                             <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>

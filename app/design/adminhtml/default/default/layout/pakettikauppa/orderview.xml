@@ -3,6 +3,9 @@
     <reference name="order_info">
       <action method='setTemplate'><template>pakettikauppa/logistics/admin/info.phtml</template></action>
     </reference>
+    <reference name="order_tab_info">
+      <action method='setTemplate'><template>pakettikauppa/logistics/admin/tab/info.phtml</template></action>
+    </reference>
   </adminhtml_sales_order_view>
   <adminhtml_sales_order_shipment_new>
     <reference name="order_info">

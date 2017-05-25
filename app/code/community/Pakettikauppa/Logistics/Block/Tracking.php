@@ -13,7 +13,11 @@ class Pakettikauppa_Logistics_Block_Tracking extends Mage_Core_Block_Template
 
   public function getTrackingStatus(){
     $tracking = Mage::helper('pakettikauppa_logistics/API')->getTracking($this->code);
-    return $tracking;
+    if(isset($tracking)){
+      return array_reverse($tracking);
+    }else{
+      return false;
+    }
   }
 }
 ?>

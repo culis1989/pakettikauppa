@@ -1,16 +1,52 @@
-<h1><?php echo $this->__('Tracking: '); ?><?php echo $this->getTracking(); ?></h1>
+<h1 class="trcking-title-pkptk"><?php echo $this->__('Tracking: '); ?><?php echo $this->getTracking(); ?></h1>
 <?php
   $tracking = $this->getTrackingStatus();
-  if(!empty($tracking)){ ?>
-    <?php foreach($tracking as $track){
+  if(!empty($tracking)){
+    echo '<table class="tracking-table-pktkp">';
+    echo '<thead>';
+      echo '<tr>';
+        echo '<th>'.$this->__('Status: ').'</th>';
+        echo '<th>'.$this->__('Post Office: ').'</th>';
+        echo '<th>'.$this->__('Postcode: ').'</th>';
+        echo '<th>'.$this->__('Reference Number: ').'</th>';
+      echo '</tr>';
+    echo '<thead>';
+    echo '<tbody>';
+    foreach($tracking as $track){
           $status_text = Mage::helper('pakettikauppa_logistics')->getShipmentStatusText($track->status_code);
-          echo '<p>'.$this->__('Status updated at: ').$track->message_created.'</p>';
-          echo '<p>'.$this->__('Reference Number: ').$track->reference.'</p>';
-          echo '<p>'.$this->__('Reference Number: ').$track->status_code .'</p>';
-          echo '<p>'.$this->__('Status: ').$status_text.'</p>';
-          echo '<hr>';
+          $date = date('d.m.Y H:i:s', strtotime($track->message_created));
+          echo '<tr>';
+          echo '<td>'.$date.'</td>';
+          echo '<td>'.$track->post_office.'</td>';
+          echo '<td>'.$track->postcode .'</td>';
+          echo '<td>'.$status_text.'</td>';
+          echo '</tr>';
     }
+    echo '</tbody>';
+    echo '<table>';
   }else{
-    echo '<p>'.$this->__('No tracking information available.').'</p>';
+    echo '<p class="trcking-title-pkptk">'.$this->__('No tracking information available.').'</p>';
   }
 ?>
+<style>
+.trcking-title-pkptk{
+  padding: 0 20px;
+}
+.tracking-table-pktkp{
+  width: 100%;
+  margin: 20px ;
+}
+.tracking-table-pktkp thead{
+  background-color: #3399cc;
+  color:#fff;
+  text-transform: uppercase;
+}
+.tracking-table-pktkp thead tr th{
+  font-weight: 600;
+}
+.tracking-table-pktkp th,
+.tracking-table-pktkp td{
+  border:1px solid #b3b3b3;
+  padding: 6px;
+}
+</style>

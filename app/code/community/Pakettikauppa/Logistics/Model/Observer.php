@@ -19,12 +19,13 @@ class Pakettikauppa_Logistics_Model_Observer {
         $order = Mage::getModel('sales/order')->load($orderId);
 
         $tracking_number = Mage::helper('pakettikauppa_logistics/API')->createShipment($order);
+        $name = Mage::helper('pakettikauppa_logistics')->getCurrentCarrierTitle($shipping_method);
 
         // GET TRACKING NUMBER HERE
         $track = Mage::getModel('sales/order_shipment_track')
                         ->setCarrierCode($code)
-                        ->setTitle('Home Delivery')
-                        ->setNumber($tracking_number.','.$carrier);
+                        ->setTitle($name)
+                        ->setNumber($tracking_number);
         $shipment->addTrack($track);
       }
     }

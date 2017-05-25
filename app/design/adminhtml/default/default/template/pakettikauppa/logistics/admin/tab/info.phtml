@@ -58,12 +58,10 @@
             <fieldset>
                 <?php  if ($_order->getTracksCollection()->count()) : ?>
                 <?php
-                $tracking = $_order->getTracksCollection()->getData();
+                $tracking = $_order->getTracksCollection();
                 foreach($tracking as $track){
-                  $method = $track['carrier_code'];
-                  $tracking_code = explode(",", $track['track_number'])[0];
-                  if($method == 'pktkp_pickuppoint' || $method == 'pktkp_homedelivery'){
-                    echo '<a target="_blank" href="/labels/'.$tracking_code.'.pdf">Print shipping label</a> | ';
+                  if($track['carrier_code'] == 'pktkp_pickuppoint' || $track['carrier_code'] == 'pktkp_homedelivery'){
+                    echo '<a target="_blank" href="/labels/'.$track['track_number'].'.pdf">Print shipping label</a> | ';
                   }
                 }
                 ?>

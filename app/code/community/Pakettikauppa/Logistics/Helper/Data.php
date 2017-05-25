@@ -48,6 +48,38 @@ class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
       }
       return $status;
     }
+
+    public function getCarrierTitleBasedonTracking($tracking_number){
+      $trackings = Mage::getResourceModel('sales/order_shipment_track_collection')->addAttributeToSelect('*')
+                    ->addAttributeToFilter('track_number',$tracking_number)
+                    ->addAttributeToFilter('carrier_code',['in' => ['pktkp_pickuppoint', 'pktkp_homedelivery']]);
+     if(count($trackings)==1){
+       foreach($trackings as $track){
+         return $track->getTitle();
+       }
+     }else{
+       return 'Unknown carrier or multiple carriers';
+     }
+    }
+
+    public function getCurrentCarrierTitle($code){
+      $methods = Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getShippingRatesCollection()->getData();
+      foreach($methods as $method){
+        if($method['code'] == $code){
+          if($method['carrier'] == 'pktkp_homedelivery'){
+            $title = $method['method_title'];
+          }
+          if($method['carrier'] == 'pktkp_pickuppoint'){
+            $title =  $method['method_description'];
+          }
+        }
+      }
+      if(isset($title)){
+        return $title;
+      }else{
+        return 'Unknown';
+      }
+    }
     public function getZip(){
       $zip_pickup = Mage::getSingleton('checkout/cart')->getQuote()->getData('pickup_point_zip');
       $zip_shipping = Mage::getSingleton('checkout/cart')->getQuote()->getShippingAddress()->getPostcode();

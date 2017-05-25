@@ -1,4 +1,6 @@
-<h1 class="trcking-title-pkptk"><?php echo $this->__('Tracking: '); ?><?php echo $this->getTracking(); ?></h1>
+<div class="tracking-pktkp">
+<?php $tracking_code = $this->getTracking(); ?>
+<h1><?php echo $this->__('Tracking: '); ?><?php echo $tracking_code ?></h1>
 <?php
   $tracking = $this->getTrackingStatus();
   if(!empty($tracking)){
@@ -25,16 +27,17 @@
     echo '</tbody>';
     echo '<table>';
   }else{
-    echo '<p class="trcking-title-pkptk">'.$this->__('No tracking information available.').'</p>';
+    echo '<p>'.$this->__('No tracking information available.').'</p>';
   }
 ?>
+</div>
 <style>
-.trcking-title-pkptk{
-  padding: 0 20px;
+.tracking-pktkp{
+  padding: 20px;
 }
 .tracking-table-pktkp{
   width: 100%;
-  margin: 20px ;
+  margin: 20px 0;
 }
 .tracking-table-pktkp thead{
   background-color: #3399cc;

@@ -22,8 +22,12 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
 {
 
   protected $client;
+  protected $key;
+  protected $secret;
 
   function __construct(){
+    $this->key = Mage::getStoreConfig('pakettikauppa/api/secret',Mage::app()->getStore());
+    $this->secret = Mage::getStoreConfig('pakettikauppa/api/secret',Mage::app()->getStore());
     $this->client = new Client(array('test_mode' => true));
   }
 
@@ -49,13 +53,19 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
 
     $sender = new Sender();
 
-    // CHANGE TO REAL SHOP DETAILS
-    $sender->setName1('RT MODULE DEVELOPMENT');
-    $sender->setAddr1('Development Address');
-    $sender->setPostcode('11080');
-    $sender->setCity('PIXEL2GO');
-    $sender->setCountry('RS');
-    // CHANGE TO REAL SHOP DETAILS
+    $store = $order->getStoreId();
+    $_sender_name = Mage::getStoreConfig('pakettikauppa/sender/name',$store);
+    $_sender_address = Mage::getStoreConfig('pakettikauppa/sender/address',$store);
+    $_sender_city = Mage::getStoreConfig('pakettikauppa/sender/city',$store);
+    $_sender_postcode = Mage::getStoreConfig('pakettikauppa/sender/postcode',$store);
+    $_sender_country = Mage::getStoreConfig('pakettikauppa/sender/country',$store);
+
+    $sender->setName1($_sender_name);
+    $sender->setAddr1($_sender_address);
+    $sender->setPostcode($_sender_postcode);
+    $sender->setCity($_sender_city);
+    $sender->setCountry($_sender_country);
+
 
     $shipping_data = $order->getShippingAddress();
     $firstname = $shipping_data->getData('firstname');
@@ -64,14 +74,27 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
 
     $name = $firstname.' '.$middlename.' '.$lastname;
 
+    if(strpos($order->getShippingMethod(), 'pktkp_pickuppoint') !== false) {
+      $shop = $order->getData('pickup_point_name');
+      $name = $shop.' ('.$firstname.' '.$middlename.' '.$lastname.')';
+      $_receiver_address = $order->getData('pickup_point_street_address');
+      $_receiver_postcode = $order->getData('pickup_point_postcode');
+      $_receiver_city = $order->getData('pickup_point_city');
+      $_receiver_country = $order->getData('pickup_point_country');
+    }else{
+      $name = $firstname.' '.$middlename.' '.$lastname;
+      $_receiver_address = $shipping_data->getData('street');
+      $_receiver_postcode = $shipping_data->getData('postcode');
+      $_receiver_city = $shipping_data->getData('city');
+      $_receiver_country = $shipping_data->getData('country_id');
+    }
 
-    // CHANGE RECEIVER IF PICKUP POINT
     $receiver = new Receiver();
     $receiver->setName1($name);
-    $receiver->setAddr1($shipping_data->getData('street'));
-    $receiver->setPostcode($shipping_data->getData('postcode'));
-    $receiver->setCity($shipping_data->getData('city'));
-    $receiver->setCountry($shipping_data->getData('country_id'));
+    $receiver->setAddr1($_receiver_address);
+    $receiver->setPostcode($_receiver_postcode);
+    $receiver->setCity($_receiver_city);
+    $receiver->setCountry($_receiver_country);
     $receiver->setEmail($shipping_data->getData('email'));
     $receiver->setPhone($shipping_data->getData('telephone'));
 
@@ -83,7 +106,7 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
 
     $parcel = new Parcel();
     $parcel->setReference($order->getIncrementId());
-    $parcel->setWeight(0.5); // kg
+    $parcel->setWeight($order->getData('weight')); // kg
 
     // GET VOLUME
     $parcel->setVolume(0.001); // m3
@@ -112,10 +135,9 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
               file_put_contents($dir.'/'.$shipment->getTrackingCode() . '.pdf', base64_decode($shipment->getPdf()));
               return (string)$shipment->getTrackingCode();
             }
-
         }
     } catch (\Exception $ex)  {
-         echo $ex->getMessage();
+        Mage::throwException('Shipment not created, please double check your store settings on STORE view level. Additional message: '.$ex->getMessage());
     }
   }
 

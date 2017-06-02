@@ -24,11 +24,23 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
   protected $client;
   protected $key;
   protected $secret;
+  protected $development;
 
   function __construct(){
-    $this->key = Mage::getStoreConfig('pakettikauppa/api/secret',Mage::app()->getStore());
-    $this->secret = Mage::getStoreConfig('pakettikauppa/api/secret',Mage::app()->getStore());
-    $this->client = new Client(array('test_mode' => true));
+    $this->development = true;
+    $this->key = Mage::getStoreConfig('pakettikauppa/api/key');
+    $this->secret = Mage::getStoreConfig('pakettikauppa/api/secret');
+    if(isset($this->key) && isset($this->secret)){
+      $params['api_key'] = $this->key;
+      $params['secret'] = $this->secret;
+      $this->client = new Client($params);
+    }else{
+      if($this->development){
+        $this->client = new Client(array('test_mode' => true));
+      }else{
+        Mage::throwException('Please insert API and secret key.');
+      }
+    }
   }
 
   public function getTracking($code){

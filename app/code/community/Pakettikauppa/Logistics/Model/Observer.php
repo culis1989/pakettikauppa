@@ -42,7 +42,7 @@ class Pakettikauppa_Logistics_Model_Observer {
        if(Mage::helper('pakettikauppa_logistics')->isPakettikauppa($shipping_method_code)){
 
          $method = Mage::helper('pakettikauppa_logistics')->getMethod($shipping_method_code);
-         $homedelivery_methods = Mage::helper('pakettikauppa_logistics/API')->getHomeDelivery();
+         $homedelivery_methods = Mage::helper('pakettikauppa_logistics/API')->getHomeDelivery(true);
          $method_available = false;
 
          // PICKUP POINT

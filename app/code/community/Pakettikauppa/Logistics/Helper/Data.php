@@ -155,4 +155,21 @@ class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
       }
       return $results;
     }
+
+    public function getPickupPointServiceCode($data, $provider){
+      $result = 0;
+      foreach($data as $d){
+        if($d->service_provider == $provider){
+          if(count($d->additional_services)>0){
+           foreach($d->additional_services as $service){
+              if($service->service_code == '2106'){
+                $result = $d->shipping_method_code;
+                break;
+              }
+           }
+          }
+        }
+      }
+      return $result;
+    }
   }

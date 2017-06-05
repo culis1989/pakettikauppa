@@ -28,15 +28,15 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
 
   function __construct(){
     $this->development = true;
-    $this->key = Mage::getStoreConfig('pakettikauppa/api/key');
-    $this->secret = Mage::getStoreConfig('pakettikauppa/api/secret');
-    if(isset($this->key) && isset($this->secret)){
-      $params['api_key'] = $this->key;
-      $params['secret'] = $this->secret;
-      $this->client = new Client($params);
+    if($this->development){
+      $this->client = new Client(array('test_mode' => true));
     }else{
-      if($this->development){
-        $this->client = new Client(array('test_mode' => true));
+      $this->key = Mage::getStoreConfig('pakettikauppa/api/key');
+      $this->secret = Mage::getStoreConfig('pakettikauppa/api/secret');
+      if(isset($this->key) && isset($this->secret)){
+        $params['api_key'] = $this->key;
+        $params['secret'] = $this->secret;
+        $this->client = new Client($params);
       }else{
         Mage::throwException('Please insert API and secret key.');
       }
@@ -124,11 +124,8 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
     $parcel->setVolume(0.001); // m3
     //$parcel->setContents('Stuff and thingies');
 
-    $shipping = $order->getShippingMethod();
-    $shipping_code = substr($shipping, strrpos($shipping, '_') + 1);
-
     $shipment = new Shipment();
-    $shipment->setShippingMethod(2103); // shipping_method_code that you can get by using listShippingMethods()
+    $shipment->setShippingMethod($order->getData('paketikauppa_smc')); // shipping_method_code that you can get by using listShippingMethods()
     $shipment->setSender($sender);
     $shipment->setReceiver($receiver);
     $shipment->setShipmentInfo($info);

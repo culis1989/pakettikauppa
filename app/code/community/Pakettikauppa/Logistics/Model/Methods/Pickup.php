@@ -17,6 +17,7 @@ implements Mage_Shipping_Model_Carrier_Interface
       if($this->getZip()){
         $methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($this->getZip());
         if(count($methods)>0){
+          $methods = Mage::helper('pakettikauppa_logistics')->sortPickupPointsByDistance($methods);
           foreach($methods as $method){
             $description = '('.$method->provider.') '.$method->name.' | '.$method->street_address.', '.$method->city.', '.$method->postcode;
             $name = $method->provider;

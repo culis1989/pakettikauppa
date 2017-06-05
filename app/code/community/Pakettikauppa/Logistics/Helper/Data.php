@@ -127,4 +127,32 @@ class Pakettikauppa_Logistics_Helper_Data extends Mage_Core_Helper_Abstract
       }
     }
 
+    public function sortPickupPointsByDistance($data){
+      $distance = [];
+      $nulls = [];
+      $results = [];
+      foreach($data as $d){
+        if($d->distance == null){
+          array_push($nulls,$d->distance);
+        }else{
+          array_push($distance,$d->distance);
+        }
+      }
+      asort($distance);
+      foreach($distance as $dist){
+        foreach($data as $d){
+          if($d->distance == $dist){
+            array_push($results,$d);
+          }
+        }
+      }
+      foreach($nulls as $nu){
+        foreach($data as $d){
+          if($d->distance == $nu){
+            array_push($results,$d);
+          }
+        }
+      }
+      return $results;
+    }
   }

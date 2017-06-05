@@ -15,6 +15,11 @@
      <pakettikauppa_methods>
        <class>Pakettikauppa_Logistics_Model_Methods</class>
      </pakettikauppa_methods>
+     <shipping>
+       <rewrite>
+         <rate_result>Pakettikauppa_Logistics_Model_Rate_Result</rate_result>
+       </rewrite>
+     </shipping>
      <pakettikauppa_logistics>
        <class>Pakettikauppa_Logistics_Model</class>
        <resourceModel>logistics_resource</resourceModel>

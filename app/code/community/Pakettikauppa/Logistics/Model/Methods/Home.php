@@ -4,12 +4,17 @@ extends Mage_Shipping_Model_Carrier_Abstract
 implements Mage_Shipping_Model_Carrier_Interface
 {
   protected $_code = 'pktkp_homedelivery';
+  protected $_home_methods;
+
+  function __construct(){
+    $this->_home_methods = Mage::helper('pakettikauppa_logistics/API')->getHomeDelivery();
+  }
 
   public function collectRates(Mage_Shipping_Model_Rate_Request $request)
   {
       /** @var Mage_Shipping_Model_Rate_Result $result */
       $result = Mage::getModel('shipping/rate_result');
-      $methods = Mage::helper('pakettikauppa_logistics/API')->getHomeDelivery();
+      $methods = $this->_home_methods;
       if(count($methods)>0){
         foreach($methods as $method){
           $result->append($this->_getCustomRate($method->service_provider,$method->name,$method->shipping_method_code, 999));
@@ -25,7 +30,7 @@ implements Mage_Shipping_Model_Carrier_Interface
    */
   public function getAllowedMethods()
   {
-    $methods = Mage::helper('pakettikauppa_logistics/API')->getHomeDelivery();
+    $methods = $this->_home_methods;
     if(count($methods)>0){
       foreach($methods as $carrier){
         $array['shipping_'.$carrier->shipping_method_code] = $carrier->name;

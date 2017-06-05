@@ -5,6 +5,13 @@ implements Mage_Shipping_Model_Carrier_Interface
 {
 
   protected $_code = 'pktkp_pickuppoint';
+  protected $_pickup_methods;
+
+
+  function __construct(){
+    $zip = Mage::helper('pakettikauppa_logistics')->getZip();
+    $this->_pickup_methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($zip);
+  }
 
   private function getZip(){
     return Mage::helper('pakettikauppa_logistics')->getZip();
@@ -15,7 +22,7 @@ implements Mage_Shipping_Model_Carrier_Interface
       /** @var Mage_Shipping_Model_Rate_Result $result */
       $result = Mage::getModel('shipping/rate_result');
       if($this->getZip()){
-        $methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($this->getZip());
+        $methods = $this->_pickup_methods;
         if(count($methods)>0){
           $methods = Mage::helper('pakettikauppa_logistics')->sortPickupPointsByDistance($methods);
           foreach($methods as $method){
@@ -37,7 +44,7 @@ implements Mage_Shipping_Model_Carrier_Interface
   public function getAllowedMethods()
   {
     if($this->getZip()){
-      $methods = Mage::helper('pakettikauppa_logistics/API')->getPickupPoints($this->getZip());
+      $methods = $this->_pickup_methods;
       if(count($methods)>0){
         foreach($methods as $carrier){
           $array['shipping_'.$carrier->shipping_method_code] = $carrier->name;

@@ -27,8 +27,8 @@ class Pakettikauppa_Logistics_Helper_API extends Mage_Core_Helper_Abstract
   protected $development;
 
   function __construct(){
-    $this->development = false;
-    if($this->development){
+    $this->development = Mage::getStoreConfig('pakettikauppa/api/development');
+    if($this->development == 1){
       $this->client = new Client(array('test_mode' => true));
     }else{
       $this->key = Mage::getStoreConfig('pakettikauppa/api/key');
